@@ -83,16 +83,19 @@ class MinHeap
   def heap_down(index)
     left_i = 2*index+1
     right_i = 2*index+2
-    # base case 
-    return if left_i > @store.length - 1 || right_i > @store.length - 1
+    # base case
+    # if there is no more children
+    return if left_i > @store.length-1 
 
     # find the min_child
-    min_i = (@store[left_i].key < @store[right_i].key ? left_i : right_i)
-
-    if @store[index].key > @store[min_i].key
-      swap(min_i, index)
-      heap_down(min_i)
+    min_i = left_i
+    if right_i < @store.length
+      min_i = (@store[left_i].key < @store[right_i].key ? left_i : right_i)
     end
+    return if @store[index].key < @store[min_i].key
+
+    swap(min_i, index)
+    heap_down(min_i)
     return
   end
 
